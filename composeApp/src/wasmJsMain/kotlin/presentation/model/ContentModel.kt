@@ -1,4 +1,4 @@
-package model
+package presentation.model
 
 data class ContentModel(
     val title: String = "",
@@ -7,7 +7,7 @@ data class ContentModel(
     val summary: String = "",
     val organization: String = "",
     val teamComposition: Map<String, Int> = emptyMap(),
-    val position: String,
+    val position: String = "",
     val screenShots: List<ImageUrl> = emptyList(),
     val descriptions: List<Description> = emptyList(),
 ) {

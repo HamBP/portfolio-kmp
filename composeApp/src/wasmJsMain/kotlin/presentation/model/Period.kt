@@ -1,4 +1,4 @@
-package model
+package presentation.model
 
 data class Period(
     val startYear: Int,

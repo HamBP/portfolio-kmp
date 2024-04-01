@@ -1,3 +1,3 @@
-package model
+package presentation.model
 
 typealias ImageUrl = String
