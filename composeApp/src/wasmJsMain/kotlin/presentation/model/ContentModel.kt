@@ -1,6 +1,7 @@
 package presentation.model
 
 data class ContentModel(
+    val links: List<Link> = emptyList(),
     val title: String = "",
     val period: Period,
     val skills: List<String> = emptyList(),

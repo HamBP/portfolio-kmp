@@ -1,13 +1,20 @@
 package presentation.feature.home
 
 import presentation.model.ContentModel
+import presentation.model.Link
 import presentation.model.Period
 
 class HomeViewModel {
     val contents: List<ContentModel> = listOf(
         ContentModel(
+            links = listOf(
+                Link("GitHub", "https://github.com/boostcampwm2023/and04-catchy-tape"),
+                Link("프로젝트 문서", "https://github.com/boostcampwm2023/and04-catchy-tape"),
+            ),
             title = "Catchy Tape",
-            period = Period(0, 0, 0, 0),
+            period = Period(2023, 11, 2024, 1),
+            skills = listOf("MVVM", "Hilt", "Coroutine", "Media3", "ExoPlayer"),
+            summary = "노래 공유 및 음악 스트리밍 서비스",
         ),
         ContentModel(
             title = "Example",

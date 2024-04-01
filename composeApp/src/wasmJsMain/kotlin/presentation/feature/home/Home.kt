@@ -10,6 +10,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import presentation.model.ContentModel
@@ -74,14 +75,47 @@ fun Content(
         LazyColumn(
             modifier = Modifier.width(800.dp)
         ) {
+            item {
+                Row {
+                    contentModel.links.forEach {
+                        Text(
+                            modifier = Modifier.padding(end = 24.dp),
+                            text= it.name,
+                            style = TextStyle.Default.copy(textDecoration = TextDecoration.Underline)
+                        )
+                    }
+                }
+            }
 
+            item {
+                Row(
+                    modifier = Modifier.padding(top = 32.dp),
+                ) {
+                    Text(
+                        contentModel.title,
+                        style = TextStyle(
+                            fontSize = 28.sp,
+                        )
+                    )
+                    Column {
+                        val period = contentModel.period
+                        Text(
+                            text = "${period.startYear}-${period.startMonth} ~ ${period.endYear}-${period.endMonth}",
+                            style = TextStyle.Default.copy(color = Color.Gray),
+                        )
+
+                        Text(
+                            text = contentModel.skills.joinToString(separator = ", "),
+                            style = TextStyle.Default.copy(color = Color.Gray),
+                        )
+                    }
+                }
+            }
 
             item {
                 Text(
-                    contentModel.title,
-                    style = TextStyle(
-                        fontSize = 28.sp,
-                    )
+                    modifier = Modifier.padding(top = 8.dp),
+                    text = contentModel.summary,
                 )
             }
 
