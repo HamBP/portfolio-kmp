@@ -14,6 +14,9 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import presentation.model.ContentModel
+import presentation.ui.body2
+import presentation.ui.h2
+import presentation.ui.pretendardFamily
 
 @Composable
 fun Home(
@@ -81,7 +84,7 @@ fun Content(
                         Text(
                             modifier = Modifier.padding(end = 24.dp),
                             text= it.name,
-                            style = TextStyle.Default.copy(textDecoration = TextDecoration.Underline)
+                            style = body2.copy(textDecoration = TextDecoration.Underline)
                         )
                     }
                 }
@@ -93,20 +96,18 @@ fun Content(
                 ) {
                     Text(
                         contentModel.title,
-                        style = TextStyle(
-                            fontSize = 28.sp,
-                        )
+                        style = h2,
                     )
                     Column {
                         val period = contentModel.period
                         Text(
                             text = "${period.startYear}-${period.startMonth} ~ ${period.endYear}-${period.endMonth}",
-                            style = TextStyle.Default.copy(color = Color.Gray),
+                            style = body2.copy(color = Color.Gray),
                         )
 
                         Text(
                             text = contentModel.skills.joinToString(separator = ", "),
-                            style = TextStyle.Default.copy(color = Color.Gray),
+                            style = body2.copy(color = Color.Gray),
                         )
                     }
                 }
@@ -116,6 +117,7 @@ fun Content(
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
                     text = contentModel.summary,
+                    style = body2
                 )
             }
 
