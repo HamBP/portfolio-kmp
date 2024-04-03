@@ -1,5 +1,6 @@
 package presentation.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,14 +12,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import presentation.model.ContentModel
 import presentation.ui.body2
 import presentation.ui.h2
 
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun Content(
-    contentModel: ContentModel
+    content: ContentModel
 ) {
     val uriHandler = LocalUriHandler.current
 
@@ -33,7 +37,7 @@ fun Content(
         ) {
             item {
                 Row {
-                    contentModel.links.forEach {
+                    content.links.forEach {
                         Text(
                             modifier = Modifier.padding(end = 24.dp)
                                 .clickable { uriHandler.openUri(it.url) },
@@ -49,20 +53,20 @@ fun Content(
                     modifier = Modifier.padding(top = 32.dp),
                 ) {
                     Text(
-                        contentModel.title,
+                        content.title,
                         style = h2,
                     )
                     Column(
                         modifier = Modifier.padding(start = 8.dp)
                     ) {
-                        val period = contentModel.period
+                        val period = content.period
                         Text(
                             text = "${period.startYear}-${period.startMonth} ~ ${period.endYear}-${period.endMonth}",
                             style = body2.copy(color = Color.Gray),
                         )
 
                         Text(
-                            text = contentModel.skills.joinToString(separator = ", "),
+                            text = content.skills.joinToString(separator = ", "),
                             style = body2.copy(color = Color.Gray),
                         )
                     }
@@ -72,12 +76,33 @@ fun Content(
             item {
                 Text(
                     modifier = Modifier.padding(top = 8.dp),
-                    text = contentModel.summary,
+                    text = content.summary,
                     style = body2
                 )
             }
 
-            // 정적 페이지이기 때문에 key를 넣지 않았다.
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    content.screenShots.forEach {
+                        Image(
+                            modifier = Modifier.width(180.dp),
+                            painter = painterResource(it),
+                            contentDescription = "스크린샷",
+                        )
+                    }
+                }
+            }
+
+            item {
+                Text(
+                    modifier = Modifier.padding(top = 24.dp),
+                    text = content.descriptions,
+                    style = body2,
+                )
+            }
         }
     }
 }
