@@ -1,5 +1,6 @@
 package presentation.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Text
@@ -7,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import presentation.model.ContentModel
@@ -18,6 +20,8 @@ import presentation.ui.h2
 fun Content(
     contentModel: ContentModel
 ) {
+    val uriHandler = LocalUriHandler.current
+
     Box(
         modifier = Modifier
             .padding(top = 20.dp)
@@ -31,7 +35,8 @@ fun Content(
                 Row {
                     contentModel.links.forEach {
                         Text(
-                            modifier = Modifier.padding(end = 24.dp),
+                            modifier = Modifier.padding(end = 24.dp)
+                                .clickable { uriHandler.openUri(it.url) },
                             text = it.name,
                             style = body2.copy(textDecoration = TextDecoration.Underline)
                         )
