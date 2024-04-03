@@ -1,5 +1,8 @@
 package presentation.feature.home
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import presentation.model.ContentModel
 import presentation.model.Link
 import presentation.model.Period
@@ -21,5 +24,10 @@ class HomeViewModel {
             period = Period(0, 0, 0, 0),
         ),
     )
-    val currentContent: ContentModel = contents.first()
+    private val _currentContent = MutableStateFlow(contents.first())
+    val currentContent: StateFlow<ContentModel> = _currentContent.asStateFlow()
+
+    fun selectContent(content: ContentModel) {
+        _currentContent.value = content
+    }
 }
