@@ -40,7 +40,7 @@ fun SideBar(
     ) {
         contents.groupBy { it.position }
             .toList()
-            .map { Pair(it.first, it.second.sortedByDescending { it.period.endYear * 12 + it.period.endMonth }) }
+            .map { Pair(it.first, it.second.sortedByDescending { it.period.priority }) }
             .forEach { entry ->
                 val (position, positionedContents) = entry
                 item { Position(position) }
