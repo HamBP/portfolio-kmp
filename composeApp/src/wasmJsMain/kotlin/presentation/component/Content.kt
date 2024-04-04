@@ -33,7 +33,7 @@ fun Content(
         contentAlignment = Alignment.TopCenter,
     ) {
         LazyColumn(
-            modifier = Modifier.width(800.dp)
+            modifier = Modifier.width(1000.dp)
         ) {
             item {
                 Row {
@@ -88,7 +88,7 @@ fun Content(
                 ) {
                     content.screenShots.forEach {
                         Image(
-                            modifier = Modifier.width(180.dp),
+                            modifier = Modifier.width(240.dp),
                             painter = painterResource(it),
                             contentDescription = "스크린샷",
                         )
