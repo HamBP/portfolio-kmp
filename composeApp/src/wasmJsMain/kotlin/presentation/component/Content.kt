@@ -82,16 +82,31 @@ fun Content(
             }
 
             item {
-                Row(
-                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    content.screenShots.forEach {
-                        Image(
-                            modifier = Modifier.width(240.dp),
-                            painter = painterResource(it),
-                            contentDescription = "스크린샷",
-                        )
+                if (content.position != "FE") {
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        content.screenShots.forEach {
+                            Image(
+                                modifier = Modifier.width(240.dp),
+                                painter = painterResource(it),
+                                contentDescription = "스크린샷",
+                            )
+                        }
+                    }
+                } else {
+                    Column(
+                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                    ) {
+                        content.screenShots.forEach {
+                            Image(
+                                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                                painter = painterResource(it),
+                                contentDescription = "스크린샷",
+                            )
+                        }
                     }
                 }
             }
@@ -103,6 +118,8 @@ fun Content(
                     style = body2,
                 )
             }
+
+            item { Spacer(modifier = Modifier.height(40.dp)) }
         }
     }
 }
