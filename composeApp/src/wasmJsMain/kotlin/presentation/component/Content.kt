@@ -24,67 +24,28 @@ import presentation.ui.h2
 fun Content(
     content: ContentModel
 ) {
-    val uriHandler = LocalUriHandler.current
+    val contentWidth = 1000.dp
 
     Box(
         modifier = Modifier
             .padding(top = 20.dp)
             .fillMaxWidth(),
-        contentAlignment = Alignment.TopCenter,
     ) {
         LazyColumn(
-            modifier = Modifier.width(1000.dp)
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                Row {
-                    content.links.forEach {
-                        Text(
-                            modifier = Modifier.padding(end = 24.dp)
-                                .clickable { uriHandler.openUri(it.url) },
-                            text = it.name,
-                            style = body2.copy(textDecoration = TextDecoration.Underline)
-                        )
-                    }
-                }
-            }
-
-            item {
-                Row(
-                    modifier = Modifier.padding(top = 32.dp),
-                ) {
-                    Text(
-                        content.title,
-                        style = h2,
-                    )
-                    Column(
-                        modifier = Modifier.padding(start = 8.dp)
-                    ) {
-                        val period = content.period
-                        Text(
-                            text = content.period.toString(),
-                            style = body2.copy(color = Color.Gray),
-                        )
-
-                        Text(
-                            text = content.skills.joinToString(separator = ", "),
-                            style = body2.copy(color = Color.Gray),
-                        )
-                    }
-                }
-            }
-
-            item {
-                Text(
-                    modifier = Modifier.padding(top = 8.dp),
-                    text = content.summary,
-                    style = body2
+                Header(
+                    modifier = Modifier.width(contentWidth),
+                    content = content,
                 )
             }
 
             item {
                 if (content.position != "FE") {
                     Row(
-                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                        modifier = Modifier.padding(top = 24.dp).width(contentWidth),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
@@ -98,7 +59,7 @@ fun Content(
                     }
                 } else {
                     Column(
-                        modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                        modifier = Modifier.padding(top = 24.dp).width(contentWidth),
                     ) {
                         content.screenShots.forEach {
                             Image(
@@ -113,7 +74,7 @@ fun Content(
 
             item {
                 Text(
-                    modifier = Modifier.padding(top = 24.dp),
+                    modifier = Modifier.padding(top = 24.dp).width(contentWidth),
                     text = content.descriptions,
                     style = body2,
                 )
@@ -121,5 +82,56 @@ fun Content(
 
             item { Spacer(modifier = Modifier.height(40.dp)) }
         }
+    }
+}
+
+@Composable
+private fun Header(
+    content: ContentModel,
+    modifier: Modifier = Modifier,
+) {
+    val uriHandler = LocalUriHandler.current
+
+    Column(
+        modifier = modifier
+    ) {
+        Row {
+            content.links.forEach {
+                Text(
+                    modifier = Modifier.padding(end = 24.dp)
+                        .clickable { uriHandler.openUri(it.url) },
+                    text = it.name,
+                    style = body2.copy(textDecoration = TextDecoration.Underline)
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier.padding(top = 32.dp),
+        ) {
+            Text(
+                content.title,
+                style = h2,
+            )
+            Column(
+                modifier = Modifier.padding(start = 8.dp)
+            ) {
+                Text(
+                    text = content.period.toString(),
+                    style = body2.copy(color = Color.Gray),
+                )
+
+                Text(
+                    text = content.skills.joinToString(separator = ", "),
+                    style = body2.copy(color = Color.Gray),
+                )
+            }
+        }
+
+        Text(
+            modifier = Modifier.padding(top = 8.dp),
+            text = content.summary,
+            style = body2
+        )
     }
 }
