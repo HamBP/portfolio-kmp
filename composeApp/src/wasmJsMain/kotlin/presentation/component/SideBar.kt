@@ -87,7 +87,7 @@ fun Project(
         contentAlignment = Alignment.CenterStart,
     ) {
         Text(
-            "${content.title} (${content.period.endYear}-${content.period.endMonth})",
+            "${content.title} (${content.period})",
             style = body2.copy(color = color)
         )
     }

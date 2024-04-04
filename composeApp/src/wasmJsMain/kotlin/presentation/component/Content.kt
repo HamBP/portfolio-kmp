@@ -61,7 +61,7 @@ fun Content(
                     ) {
                         val period = content.period
                         Text(
-                            text = "${period.startYear}-${period.startMonth} ~ ${period.endYear}-${period.endMonth}",
+                            text = content.period.toString(),
                             style = body2.copy(color = Color.Gray),
                         )
 
@@ -83,7 +83,7 @@ fun Content(
 
             item {
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     content.screenShots.forEach {
