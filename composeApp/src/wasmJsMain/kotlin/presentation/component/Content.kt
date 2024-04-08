@@ -23,6 +23,7 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.model.ContentModel
 import presentation.ui.body2
+import presentation.ui.body3
 import presentation.ui.head2
 import presentation.ui.title3
 
@@ -91,7 +92,13 @@ fun Content(
                 )
             }
 
-            item { Spacer(modifier = Modifier.height(40.dp)) }
+            item {
+                Text(
+                    modifier = Modifier.padding(top = 80.dp, bottom = 40.dp).align(Alignment.CenterEnd),
+                    text = "이 페이지는 alpha 버전인 KMP(Kotlin Wasm)으로 만들어졌으며, 모바일 브라우저를 지원하지 않습니다.",
+                    style = body3
+                )
+            }
         }
     }
 }
@@ -127,15 +134,34 @@ private fun Header(
             Column(
                 modifier = Modifier.padding(start = 8.dp)
             ) {
-                Text(
-                    text = content.period.toString(),
-                    style = body2.copy(color = Color.Gray),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = content.period.toString(),
+                        style = body2.copy(color = Color.Gray),
+                    )
+                    Text(
+                        text = content.organization,
+                        style = body2.copy(color = Color.Gray),
+                    )
+                }
 
-                Text(
-                    text = content.skills.joinToString(separator = ", "),
-                    style = body2.copy(color = Color.Gray),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = content.skills.joinToString(separator = ", "),
+                        style = body2.copy(color = Color.Gray),
+                    )
+                    Text(
+                        text = content.teamComposition.toList()
+                            .joinToString(separator = ", ") { "${it.first} ${it.second}" },
+                        style = body2.copy(color = Color.Gray),
+                    )
+                }
             }
         }
 
