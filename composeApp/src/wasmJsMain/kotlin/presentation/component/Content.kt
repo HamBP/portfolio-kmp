@@ -10,13 +10,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.withStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.intellij.markdown.ast.ASTNode
+import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
+import org.intellij.markdown.parser.MarkdownParser
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.model.ContentModel
 import presentation.ui.body2
 import presentation.ui.h2
+import presentation.ui.h3
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -72,11 +81,14 @@ fun Content(
                 }
             }
 
+            val parsedTree =
+                MarkdownParser(CommonMarkFlavourDescriptor()).buildMarkdownTreeFromString(content.descriptions)
+
             item {
-                Text(
-                    modifier = Modifier.padding(top = 24.dp).width(contentWidth),
-                    text = content.descriptions,
-                    style = body2,
+                RenderMarkdown(
+                    width = contentWidth,
+                    src = content.descriptions,
+                    ast = parsedTree,
                 )
             }
 
@@ -133,5 +145,69 @@ private fun Header(
             text = content.summary,
             style = body2
         )
+    }
+}
+
+@Composable
+private fun RenderMarkdown(
+    width: Dp,
+    src: String,
+    ast: ASTNode,
+) {
+    val annotatedString = buildAnnotatedString {
+        parseAst(src, ast)
+    }
+
+    Text(modifier = Modifier.width(width), text = annotatedString)
+}
+
+private fun AnnotatedString.Builder.parseAst(
+    src: String,
+    ast: ASTNode,
+) {
+    val spanStyle = SpanStyle(
+        fontFamily = body2.fontFamily,
+        fontSize = body2.fontSize,
+        fontWeight = body2.fontWeight,
+    )
+
+    when (ast.type.name) {
+        "MARKDOWN_FILE", "UNORDERED_LIST", "PARAGRAPH", "LIST_ITEM" -> {
+            ast.children.forEach {
+                parseAst(src, it)
+            }
+        }
+
+        "TEXT" -> {
+            withStyle(style = spanStyle) {
+                append(src.substring(ast.startOffset, ast.endOffset))
+            }
+        }
+
+        "LIST_BULLET" -> {
+            withStyle(style = spanStyle) {
+                append("·")
+            }
+        }
+
+        "WHITE_SPACE" -> {
+            withStyle(style = spanStyle) {
+                append(" ")
+            }
+        }
+
+        "ATX_CONTENT" -> {
+            withStyle(style = spanStyle.copy(fontSize = h3.fontSize)) {
+                append(src.substring(ast.startOffset, ast.endOffset))
+            }
+        }
+
+        "EOL" -> append("\n")
+
+        else -> {
+            ast.children.forEach {
+                parseAst(src, it)
+            }
+        }
     }
 }

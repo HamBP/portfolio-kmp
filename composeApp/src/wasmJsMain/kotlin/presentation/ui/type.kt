@@ -22,6 +22,11 @@ val h2 = TextStyle(
     fontSize = 28.sp,
 )
 
+val h3 = TextStyle(
+    fontFamily = pretendardFamily,
+    fontSize = 16.sp,
+)
+
 val body2 = TextStyle(
     fontFamily = pretendardFamily,
     fontSize = 14.sp
