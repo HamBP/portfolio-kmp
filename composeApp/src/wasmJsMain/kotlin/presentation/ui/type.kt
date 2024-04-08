@@ -24,19 +24,35 @@ val pretendardFamily = FontFamily(
     ),
 )
 
-val h2 = TextStyle(
+val head1 = TextStyle(
+    fontFamily = pretendardFamily,
+    fontSize = 36.sp,
+    fontWeight = FontWeight.SemiBold,
+)
+
+val head2 = TextStyle(
     fontFamily = pretendardFamily,
     fontSize = 28.sp,
     fontWeight = FontWeight.SemiBold,
 )
 
-val h3 = TextStyle(
+val title3 = TextStyle(
+    fontFamily = pretendardFamily,
+    fontSize = 18.sp,
+    fontWeight = FontWeight.SemiBold,
+)
+
+val body1 = TextStyle(
     fontFamily = pretendardFamily,
     fontSize = 16.sp,
-    fontWeight = FontWeight.SemiBold,
 )
 
 val body2 = TextStyle(
     fontFamily = pretendardFamily,
     fontSize = 14.sp
+)
+
+val body3 = TextStyle(
+    fontFamily = pretendardFamily,
+    fontSize = 12.sp
 )

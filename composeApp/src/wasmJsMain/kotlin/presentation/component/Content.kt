@@ -15,7 +15,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
@@ -24,8 +23,8 @@ import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.model.ContentModel
 import presentation.ui.body2
-import presentation.ui.h2
-import presentation.ui.h3
+import presentation.ui.head2
+import presentation.ui.title3
 
 
 @OptIn(ExperimentalResourceApi::class)
@@ -86,7 +85,7 @@ fun Content(
 
             item {
                 RenderMarkdown(
-                    width = contentWidth,
+                    modifier = Modifier.padding(top = 24.dp).width(contentWidth),
                     src = content.descriptions,
                     ast = parsedTree,
                 )
@@ -123,7 +122,7 @@ private fun Header(
         ) {
             Text(
                 content.title,
-                style = h2,
+                style = head2,
             )
             Column(
                 modifier = Modifier.padding(start = 8.dp)
@@ -143,14 +142,14 @@ private fun Header(
         Text(
             modifier = Modifier.padding(top = 8.dp),
             text = content.summary,
-            style = body2
+            style = title3,
         )
     }
 }
 
 @Composable
 private fun RenderMarkdown(
-    width: Dp,
+    modifier: Modifier = Modifier,
     src: String,
     ast: ASTNode,
 ) {
@@ -158,7 +157,7 @@ private fun RenderMarkdown(
         parseAst(src, ast)
     }
 
-    Text(modifier = Modifier.width(width), text = annotatedString)
+    Text(modifier = modifier, text = annotatedString)
 }
 
 private fun AnnotatedString.Builder.parseAst(
@@ -167,8 +166,8 @@ private fun AnnotatedString.Builder.parseAst(
 ) {
     val spanStyle = SpanStyle(
         fontFamily = body2.fontFamily,
-        fontSize = body2.fontSize,
-        fontWeight = body2.fontWeight,
+        fontSize = if (ast.parent?.type?.name?.startsWith("ATX") == true) title3.fontSize else body2.fontSize,
+        fontWeight = if (ast.parent?.type?.name?.startsWith("ATX") == true) title3.fontWeight else body2.fontWeight,
     )
 
     when (ast.type.name) {
@@ -178,7 +177,7 @@ private fun AnnotatedString.Builder.parseAst(
             }
         }
 
-        "TEXT" -> {
+        "TEXT", "ATX_CONTENT" -> {
             withStyle(style = spanStyle) {
                 append(src.substring(ast.startOffset, ast.endOffset))
             }
@@ -193,12 +192,6 @@ private fun AnnotatedString.Builder.parseAst(
         "WHITE_SPACE" -> {
             withStyle(style = spanStyle) {
                 append(" ")
-            }
-        }
-
-        "ATX_CONTENT" -> {
-            withStyle(style = spanStyle.copy(fontSize = h3.fontSize)) {
-                append(src.substring(ast.startOffset, ast.endOffset))
             }
         }
 
