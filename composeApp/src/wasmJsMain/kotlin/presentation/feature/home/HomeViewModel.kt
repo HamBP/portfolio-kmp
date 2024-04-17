@@ -50,7 +50,7 @@ class HomeViewModel {
             while (true) {
                 delay(5_000)
                 val windRange = -5..-2
-                wind = IntOffset(0, windRange.random())
+                wind = IntOffset(windRange.random(), windRange.random())
             }
         }
     }
