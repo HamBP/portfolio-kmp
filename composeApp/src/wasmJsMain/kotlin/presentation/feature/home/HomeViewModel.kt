@@ -36,11 +36,11 @@ class HomeViewModel {
     private fun generateBubbles() {
         viewModelScope.launch {
             while (true) {
-                repeat((4..8).random()) {
-                    bubbles.value += BubbleModel.create(IntSize.Zero)
+                delay(1000)
+                repeat((2..4).random()) {
+                    bubbles.value += BubbleModel.create(wind, area)
                     delay(200)
                 }
-                delay(3000)
             }
         }
     }
@@ -49,7 +49,7 @@ class HomeViewModel {
         viewModelScope.launch {
             while (true) {
                 delay(5_000)
-                val windRange = -5..-2
+                val windRange = -4..4
                 wind = IntOffset(windRange.random(), windRange.random())
             }
         }

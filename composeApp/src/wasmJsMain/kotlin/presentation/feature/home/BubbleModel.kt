@@ -13,23 +13,33 @@ data class BubbleModel(
     fun move(wind: IntOffset): BubbleModel {
         return copy(
             currentOffset = currentOffset + IntOffset(velocity.x.toInt(), velocity.y.toInt()) + wind,
-            velocity = velocity * 0.99f // 공기 저항으로 인한 손실
+            velocity = velocity * 0.995f // 공기 저항으로 인한 손실
         )
     }
 
     companion object {
         var nextId = 1
 
-        fun create(area: IntSize): BubbleModel {
-            val x = (0..(area.width)).random()
-            val y = (0..(area.height)).random()
-            val velocityRange = 10..20
+        fun create(wind: IntOffset, area: IntSize): BubbleModel {
+            val size = (80..120).random()
+
+            val startOffset = (0..(area.width + area.height)).random()
+            val edgeX = if (wind.x > 0) -size else area.width
+            val edgeY = if (wind.y > 0) -size else area.height
+
+            val x = if (startOffset < area.width) startOffset else edgeX
+            val y = if (startOffset > area.width) startOffset % area.height else edgeY
+            val velocityRange = 2..8
+            val directionX = if (wind.x > 0) 1 else -1
+            val directionY = if (wind.y > 0) 1 else -1
 
             return BubbleModel(
                 id = nextId++,
-                size = (80..120).random(),
+                size = size,
                 currentOffset = IntOffset(x, y),
-                velocity = Offset(velocityRange.random().toFloat(), velocityRange.random().toFloat()),
+                velocity = Offset(
+                    x = directionX * velocityRange.random().toFloat(),
+                    y = directionY * velocityRange.random().toFloat()),
             )
         }
     }
