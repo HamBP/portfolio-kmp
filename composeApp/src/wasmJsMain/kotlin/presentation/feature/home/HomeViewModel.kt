@@ -9,11 +9,12 @@ class HomeViewModel {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     var area: IntSize = IntSize.Zero
     val bubbles: MutableStateFlow<List<BubbleModel>> = MutableStateFlow(emptyList())
-    private var wind = IntOffset(0, -2)
+    private var wind = IntOffset.Zero
 
     init {
         moveBubbles()
         generateBubbles()
+        generateWind()
     }
 
     private fun moveBubbles() {
@@ -35,8 +36,21 @@ class HomeViewModel {
     private fun generateBubbles() {
         viewModelScope.launch {
             while (true) {
-                delay(1000)
-                bubbles.value += BubbleModel.create(IntSize.Zero)
+                repeat((4..8).random()) {
+                    bubbles.value += BubbleModel.create(IntSize.Zero)
+                    delay(200)
+                }
+                delay(3000)
+            }
+        }
+    }
+
+    private fun generateWind() {
+        viewModelScope.launch {
+            while (true) {
+                delay(5_000)
+                val windRange = -5..-2
+                wind = IntOffset(0, windRange.random())
             }
         }
     }

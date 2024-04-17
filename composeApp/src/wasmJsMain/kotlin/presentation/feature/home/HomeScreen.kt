@@ -41,7 +41,7 @@ private fun Bubbles(
     Box(modifier = Modifier.fillMaxSize()) {
         bubbles.forEach { bubble ->
             Bubble(
-                modifier = Modifier.size(100.dp).offset { bubble.currentOffset }
+                modifier = Modifier.size(bubble.size.dp).offset { bubble.currentOffset }
             )
         }
     }

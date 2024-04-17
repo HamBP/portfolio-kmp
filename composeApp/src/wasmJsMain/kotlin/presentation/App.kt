@@ -23,7 +23,7 @@ fun App() {
 
 @Composable
 fun MainNavHost() {
-    var currentNav by remember { mutableStateOf<MainNavigation>(MainNavigation.Projects) }
+    var currentNav by remember { mutableStateOf<MainNavigation>(MainNavigation.Home) }
 
     Column {
         Header(
