@@ -1,4 +1,4 @@
-package presentation.feature.home
+package presentation.feature.projects
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.width
@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.dp
 import presentation.component.Content
 import presentation.component.SideBar
 
-private val homeViewModel = HomeViewModel()
+private val projectsViewModel = ProjectsViewModel()
 
 @Composable
-fun Home(
-    viewModel: HomeViewModel = homeViewModel
+fun ProjectsScreen(
+    viewModel: ProjectsViewModel = projectsViewModel
 ) {
     val currentContent by viewModel.currentContent.collectAsState()
 

@@ -1,14 +1,12 @@
-package presentation.feature.home
+package presentation.feature.projects
 
 import data.ProjectRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import presentation.model.ContentModel
-import presentation.model.Link
-import presentation.model.Period
 
-class HomeViewModel(
+class ProjectsViewModel(
     projectRepository: ProjectRepository = ProjectRepository(),
 ) {
     val contents: List<ContentModel> = projectRepository.getProjects()
