@@ -92,12 +92,29 @@ fun Bubble(modifier: Modifier) {
     Box(
         modifier = modifier,
     ) {
+        val borderBrush = Brush.radialGradient(Pair(0.7f, Color.Transparent), Pair(1f, Color(0xFFEB00FF)))
+
         Box(
-            modifier = Modifier.fillMaxSize().background(
-                brush = Brush.linearGradient(Pair(0f, Color.Red), Pair(1f, Color.Blue)),
-                shape = CircleShape,
-                alpha = 0.2f,
-            )
+            modifier = Modifier.fillMaxSize()
+                .background(
+                    brush = Brush.linearGradient(
+                        Pair(0f, Color.Transparent),
+                        Pair(0.15f, Color.Red),
+                        Pair(0.3f, Color(0xFFFF8000)),
+                        Pair(0.45f, Color.Yellow),
+                        Pair(0.6f, Color.Green),
+                        Pair(0.75f, Color.Blue),
+                        Pair(0.9f, Color(0xFFEB00FF)),
+                        Pair(1f, Color.Transparent),
+                    ),
+                    shape = CircleShape,
+                    alpha = 0.05f,
+                )
+                .background(
+                    brush = borderBrush,
+                    shape = CircleShape,
+                    alpha = 0.1f,
+                )
         )
     }
 }
