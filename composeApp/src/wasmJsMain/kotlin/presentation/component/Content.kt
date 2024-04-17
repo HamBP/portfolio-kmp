@@ -91,14 +91,6 @@ fun Content(
                     ast = parsedTree,
                 )
             }
-
-            item {
-                Text(
-                    modifier = Modifier.padding(top = 80.dp, bottom = 40.dp).align(Alignment.CenterEnd),
-                    text = "이 페이지는 alpha 버전인 KMP(Kotlin Wasm)으로 만들어졌으며, 모바일 브라우저를 지원하지 않습니다.",
-                    style = body3
-                )
-            }
         }
     }
 }
