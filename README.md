@@ -1,19 +1,35 @@
-This is a Kotlin Multiplatform project targeting Web.
+# 안드로이드 개발자를 위한 웹 포트폴리오
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+### 왜 개발하게 되었을까요?
 
+아마 취업이나 이직을 준비하시는 많은 분들이 경험하셨겠지만, 노션으로 관리하던 기존 포트폴리오는 다음과 같은 문제가 있습니다.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html),
-[Compose Multiplatform](https://github.com/JetBrains/compose-multiplatform/#compose-multiplatform),
-[Kotlin/Wasm](https://kotl.in/wasm/)…
+- PDF 추출시 레이아웃이 변경된다.
+- 스크롤이 길어져 가독성을 해친다.
+- 많은 이미지를 첨부할 경우 이미지가 렌더링 되지 않는다.
 
-**Note:** Compose/Web is Experimental and may be changed at any time. Use it only for evaluation purposes.
-We would appreciate your feedback on Compose/Web and Kotlin/Wasm in the public Slack channel [#compose-web](https://slack-chats.kotlinlang.org/c/compose-web).
-If you face any issues, please report them on [GitHub](https://github.com/JetBrains/compose-multiplatform/issues).
+구인 공고보다 구직자의 수가 많은 요즘 같은 시기에 중요한 것은, 짧은 시간으로도 나에 대해 파악할 수 있도록 정보를 제공하는 것입니다. 노션의 경우 작성의 편리함은 있지만 스크롤이 길어져 한눈에 전체를 파악하기 어렵습니다. 이 프로젝트는 이 문제를 해결하기 위해 시작되었습니다.
 
-You can open the web application by running the `:composeApp:wasmJsBrowserDevelopmentRun` Gradle task.
+### 사용 방법
+
+안드로이드 개발자라면 평소에 익숙하게 사용하던 Kotlin과 Compose를 통해 웹을 개발할 수 있습니다. 이 프로젝트는 KMP로 개발되었으며, 실행 방법은 아래 문서를 참조해 주세요.
+
+https://kotlinlang.org/docs/wasm-get-started.html
+
+제 개인 정보 보호를 위해, 포트폴리오에 들어갈 내용과 이미지들은 .gitignore에 추가되어 있습니다. 여러분의 포트폴리오를 만들기를 원한다면 ProjectRepository의 getProejects() 메서드에 반환 값을 채워주세요.
+
+프로젝트 내용은 마크다운을 파싱하고 있으나 처리하지 않은 token이 아직 많습니다. 사용하실 때 참고해 주세요.
+
+### KMP 관련 주의사항
+
+현재 Kotlin wasm은 alpha 버전이기 때문에 지원되지 않는 것이 많습니다.
+
+- 모바일 브라우저를 지원하지 않습니다.
+- 한글이 깨집니다.
+- 지원되는 라이브러리가 적습니다.
+
+한글이 깨지는 문제를 해결하기 위해 한글을 지원하는 폰트의 regular, semi bold 두께의 폰트를 base64로 인코딩하여 문자열로 추가했습니다. 모바일에서 접속하는 것은 가능하지만, 스크롤, 터치 영역 등 제대로 동작하지 않는 것이 많습니다. 지원되는 라이브러리가 매우 적기 때문에 커스텀을 위해선 직접 구현하거나 stable하지 않은 라이브러리를 사용할 가능성이 높습니다.
+
+### 문의
+
+개인 포트폴리오를 목적으로 제작되었기 때문에 확장성이 떨어지는 코드가 많습니다. 확장성 개선 및 코드 문의를 원한다면 이슈를 남겨주세요.
