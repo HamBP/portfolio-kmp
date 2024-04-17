@@ -12,9 +12,8 @@ class HomeViewModel {
     private var wind = IntOffset(0, -2)
 
     init {
-        bubbles.value =
-            listOf(BubbleModel.create(IntSize.Zero), BubbleModel.create(IntSize.Zero), BubbleModel.create(IntSize.Zero))
         moveBubbles()
+        generateBubbles()
     }
 
     private fun moveBubbles() {
@@ -23,7 +22,21 @@ class HomeViewModel {
                 delay(40)
                 bubbles.value = bubbles.value.map { bubble ->
                     bubble.move(wind)
+                }.filter { bubble ->
+                    val x = bubble.currentOffset.x
+                    val y = bubble.currentOffset.y
+                    val size = bubble.size
+                    x in (-size..area.width + size) && y in (-size..area.height + size)
                 }
+            }
+        }
+    }
+
+    private fun generateBubbles() {
+        viewModelScope.launch {
+            while (true) {
+                delay(1000)
+                bubbles.value += BubbleModel.create(IntSize.Zero)
             }
         }
     }
