@@ -13,7 +13,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import presentation.model.ContentModel
-import presentation.ui.body2
+import presentation.ui.body3
 
 @Composable
 fun SideBar(
@@ -64,7 +64,7 @@ fun Position(position: String) {
             .padding(start = 20.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
-        Text(position)
+        Text(position, style = body3)
     }
 }
 
@@ -88,7 +88,7 @@ fun Project(
     ) {
         Text(
             "${content.title} (${content.period})",
-            style = body2.copy(color = color)
+            style = body3.copy(color = color)
         )
     }
 }

@@ -52,6 +52,11 @@ fun Content(
             }
 
             item {
+                if (content.screenShots.isEmpty()) {
+                    Text("(제공된 이미지가 없습니다)", style = body2)
+                    return@item
+                }
+
                 if (content.position != "FE") {
                     Row(
                         modifier = Modifier.padding(top = 24.dp).width(contentWidth),
@@ -86,7 +91,7 @@ fun Content(
 
             item {
                 RenderMarkdown(
-                    modifier = Modifier.padding(top = 24.dp).width(contentWidth),
+                    modifier = Modifier.padding(top = 24.dp, bottom = 40.dp).width(contentWidth),
                     src = content.descriptions,
                     ast = parsedTree,
                 )
