@@ -7,14 +7,28 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class HomeViewModel {
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    var area: IntSize = IntSize.Zero
     val bubbles: MutableStateFlow<List<BubbleModel>> = MutableStateFlow(emptyList())
+    private var shouldGenerateInitialBubbles = true
     private var wind = IntOffset.Zero
+    var area: IntSize = IntSize.Zero
+        set(value) {
+            field = value
+            if (shouldGenerateInitialBubbles) {
+                generateInitialBubbles(value)
+                shouldGenerateInitialBubbles = false
+            }
+        }
 
     init {
         moveBubbles()
         generateBubbles()
         generateWind()
+    }
+
+    private fun generateInitialBubbles(newArea: IntSize) {
+        repeat(10) {
+            bubbles.value += BubbleModel.createIntoRandomPosition(newArea)
+        }
     }
 
     private fun moveBubbles() {

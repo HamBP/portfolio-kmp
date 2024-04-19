@@ -20,6 +20,23 @@ data class BubbleModel(
     companion object {
         var nextId = 1
 
+        fun createIntoRandomPosition(area: IntSize): BubbleModel {
+            val size = (80..120).random()
+
+            val x = (0..area.width).random()
+            val y = (0..area.height).random()
+            val velocityRange = -8..8
+
+            return BubbleModel(
+                id = nextId++,
+                size = size,
+                currentOffset = IntOffset(x, y),
+                velocity = Offset(
+                    x = velocityRange.random().toFloat(),
+                    y = velocityRange.random().toFloat()),
+            )
+        }
+
         fun create(wind: IntOffset, area: IntSize): BubbleModel {
             val size = (80..120).random()
 
