@@ -1,19 +1,26 @@
 package presentation.feature.home
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
+import portfolio.composeapp.generated.resources.*
 import presentation.ui.*
 
 private val homeViewModel = HomeViewModel()
@@ -26,7 +33,10 @@ fun HomeScreen(
     val bubbles by viewModel.bubbles.collectAsState()
 
     Box(
-        modifier = Modifier.fillMaxWidth().onSizeChanged { viewModel.area = it },
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .onSizeChanged { viewModel.area = it },
         contentAlignment = Alignment.TopCenter,
     ) {
         Bubbles(bubbles)
@@ -52,36 +62,127 @@ private fun HomeContent(
     navigateToProjects: () -> Unit
 ) {
     Column(
-        modifier = Modifier.width(1000.dp).padding(top = 240.dp),
-        horizontalAlignment = Alignment.Start,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Text(
-            text = "환영합니다",
-            style = head1,
-            color = Gray90,
+        PhoneFrame(
+            modifier = Modifier.padding(top = 40.dp),
+            navigateToProjects = navigateToProjects,
+        )
+        Spacer(
+            modifier = Modifier.weight(1f)
         )
         Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = "개발을 통해 사용자에게 가치를 만들어내는 것을 좋아합니다.\n" +
-                    "그동안 진행했던 프로젝트를 통해 개발에 대한 열정을 확인해 보세요.",
-            style = body1,
-            color = Gray90,
+            modifier = Modifier.padding(vertical = 40.dp),
+            text = "이 페이지는 Alpha 버전의 KMP(Kotlin Wasm)를 이용하여 제작되었으며, 모바일 브라우저를 지원하지 않습니다.",
+            style = caption.copy(color = Gray60)
         )
-        Text(
-            modifier = Modifier.padding(top = 8.dp),
-            text = "이 페이지는 KMP를 이용하여 Compose로 만들었습니다.\n" +
-                    "Kotlin Wasm은 현재 alpha 버전으로, 아직 모바일 브라우저를 지원하고 있지 않습니다.",
-            style = body3,
-            color = Gray60,
-        )
-        TextButton(
-            modifier = Modifier.padding(top = 24.dp),
-            onClick = navigateToProjects,
+    }
+}
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+private fun PhoneFrame(
+    navigateToProjects: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+    ) {
+        Box(
+            modifier = Modifier.width(393.dp).height(760.dp).clip(RoundedCornerShape(40.dp)).background(Color.White)
+                .border(
+                    shape = RoundedCornerShape(40.dp),
+                    color = Color.Black,
+                    width = 4.dp,
+                )
+                .padding(horizontal = 24.dp)
         ) {
-            Text(
-                "프로젝트 보러가기",
-                style = body1,
-                color = Primary,
+            Column {
+                Image(
+                    modifier = Modifier.padding(top = 4.dp),
+                    painter = painterResource(Res.drawable.status_bar),
+                    contentDescription = null,
+                )
+                Image(
+                    modifier = Modifier.padding(top = 16.dp).size(100.dp).clip(CircleShape)
+                        .align(Alignment.CenterHorizontally),
+                    painter = painterResource(Res.drawable.profile),
+                    contentDescription = "프로필 사진",
+                    contentScale = ContentScale.Crop,
+                )
+                Text(
+                    modifier = Modifier.padding(top = 8.dp).fillMaxWidth(),
+                    text = "송준영",
+                    style = head2.copy(textAlign = TextAlign.Center),
+                    color = Gray90,
+                )
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "ANDROID DEVELOPER",
+                    style = body2.copy(textAlign = TextAlign.Center),
+                    color = Gray60,
+                )
+                Text(
+                    modifier = Modifier.padding(top = 32.dp),
+                    text = "개발을 통해 사용자에게 가치를 전달하고 싶습니다\n" +
+                            "프로젝트를 통해 개발과 서비스에 대한 열정을 확인해 보세요",
+                    style = body2,
+                    color = Gray90,
+                )
+                Row(
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .clickable(onClick = navigateToProjects)
+                        .align(Alignment.End),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Text(
+                        text = "프로젝트 보러가기",
+                        style = body2,
+                        color = Primary,
+                    )
+                    Icon(
+                        painter = painterResource(Res.drawable.arrow_right),
+                        contentDescription = null,
+                        tint = Primary,
+                    )
+                }
+                Text(
+                    modifier = Modifier.padding(top = 40.dp),
+                    text = "ABOUT ME",
+                    style = title3,
+                    color = Gray90,
+                )
+                Text(
+                    modifier = Modifier.padding(top = 12.dp),
+                    text = "저는 2020년에 안드로이드로 개발을 시작하여, 현재 4년째 개발하고 있습니다. 이 기간동안 안드로이드 뿐만 아니라 웹, 서버, Flutter 등 다양한 개발 분야에서 경험을 쌓았습니다. 타 직군에서 가능한 것과 어려운 것이 무엇인지 이해하며 커뮤니케이션에 강점이 있습니다. 최근 1년간은 다시 안드로이드 개발에 집중하여, Kotlin과 안드로이드 역량 향상에 노력을 기울이고 있습니다.\n" +
+                            "\n" +
+                            "글 쓰는 것이 좋아 블로그를 운영하고 있습니다. 단순 정보 공유보다는, 개발 과정에서의 고민을 포함하여 하나의 이야기로 풀어내려고 합니다.",
+                    style = body2,
+                    color = Gray90,
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                Image(
+                    painter = painterResource(Res.drawable.navigation_bar),
+                    contentDescription = null,
+                )
+            }
+        }
+
+        Column {
+            Box(
+                modifier = Modifier
+                    .padding(top = 140.dp)
+                    .width(4.dp).height(100.dp)
+                    .clip(shape = RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
+                    .background(Color.Black)
+            )
+            Box(
+                modifier = Modifier
+                    .padding(top = 40.dp)
+                    .width(4.dp).height(50.dp)
+                    .clip(shape = RoundedCornerShape(topEnd = 4.dp, bottomEnd = 4.dp))
+                    .background(Color.Black)
             )
         }
     }

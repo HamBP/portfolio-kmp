@@ -54,5 +54,10 @@ val body2 = TextStyle(
 
 val body3 = TextStyle(
     fontFamily = pretendardFamily,
+    fontSize = 13.sp
+)
+
+val caption = TextStyle(
+    fontFamily = pretendardFamily,
     fontSize = 12.sp
 )
