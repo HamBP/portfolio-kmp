@@ -42,7 +42,7 @@ class HomeViewModel {
                     val y = bubble.currentOffset.y
                     val size = bubble.size
                     x in (-size..area.width) && y in (-size..area.height)
-                }
+                }.takeLast(100)
             }
         }
     }
