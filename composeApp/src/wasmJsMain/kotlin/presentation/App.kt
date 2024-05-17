@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import navigation.NavHost
 import navigation.composable
 import navigation.rememberNavController
 import presentation.feature.home.HomeScreen
@@ -26,18 +27,6 @@ fun App() {
 @Composable
 fun MainNavHost() {
     val navController = rememberNavController()
-    val backStack by navController.backStack.collectAsState()
-    val currentDestination by derivedStateOf { backStack.last().destination.route }
-
-    val homeDestination = composable(route = MainNavigation.Home.route) {
-        HomeScreen(
-            navigateToProjects = {
-                navController.navigate(MainNavigation.Projects.route)
-            }
-        )
-    }
-    val projectsDestination = composable(route = MainNavigation.Projects.route) { ProjectsScreen() }
-    val graph = remember { listOf(homeDestination, projectsDestination) }
 
     Column {
         Header(
@@ -46,8 +35,19 @@ fun MainNavHost() {
             }
         )
 
-        val currentScreen = graph.find { it.route == currentDestination }!!
-        currentScreen.content(backStack.last())
+        NavHost(
+            navController = navController,
+        ) {
+            composable(route = MainNavigation.Home.route) {
+                HomeScreen(
+                    navigateToProjects = {
+                        navController.navigate(MainNavigation.Projects.route)
+                    }
+                )
+            }
+
+            composable(route = MainNavigation.Projects.route) { ProjectsScreen() }
+        }
     }
 }
 
