@@ -8,12 +8,7 @@ fun NavHost(
     startDestination: String,
     builder: NavGraphBuilder.() -> Unit,
 ) {
-    val graph = remember { NavGraphBuilder().apply(builder).build() }
-    navController.graph = graph
-
-    LaunchedEffect(startDestination) {
-        navController.navigate(startDestination)
-    }
+    navController.graph = remember { NavGraphBuilder(startDestination).apply(builder).build() }
 
     val backStack by navController.backStack.collectAsState()
     val currentDestination by derivedStateOf { if (backStack.isNotEmpty()) backStack.last().destination else null }

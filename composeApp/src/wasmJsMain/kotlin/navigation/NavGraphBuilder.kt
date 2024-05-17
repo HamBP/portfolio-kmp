@@ -13,7 +13,9 @@ fun NavGraphBuilder.composable(
     )
 }
 
-class NavGraphBuilder {
+class NavGraphBuilder(
+    private val startDestination: String
+) {
     private val destinations = mutableListOf<ComposeNavigator.Destination>()
 
     fun addDestination(destination: ComposeNavigator.Destination) {
@@ -22,5 +24,6 @@ class NavGraphBuilder {
 
     fun build() = NavGraph().apply {
         addDestinations(destinations)
+        startDestinationRoute = startDestination
     }
 }

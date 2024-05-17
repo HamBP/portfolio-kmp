@@ -15,7 +15,10 @@ class NavController {
     private var _graph: NavGraph? = null
     var graph get() = _graph!!
         set(value) {
-            _graph = value
+            if (value != _graph) {
+                _graph = value
+                navigate(graph.startDestinationRoute!!)
+            }
         }
 
     private val _backStack = MutableStateFlow(listOf<NavBackStackEntry>())
