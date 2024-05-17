@@ -1,8 +1,6 @@
-package me.algosketch.navigation
+package navigation
 
 import androidx.compose.runtime.Composable
-import navigation.NavBackStackEntry
-import navigation.NavDestination
 
 class ComposeNavigator {
     class Destination(

@@ -1,7 +1,6 @@
 package navigation
 
 import androidx.compose.runtime.Composable
-import me.algosketch.navigation.ComposeNavigator
 
 fun NavGraphBuilder.composable(
     route: String,

@@ -1,7 +1,6 @@
 package navigation
 
 import androidx.compose.runtime.*
-import me.algosketch.navigation.ComposeNavigator
 
 @Composable
 fun NavHost(
