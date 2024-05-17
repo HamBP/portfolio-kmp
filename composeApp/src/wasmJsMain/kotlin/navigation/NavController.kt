@@ -12,11 +12,16 @@ fun rememberNavController(): NavController {
 }
 
 class NavController {
-    private val _backStack =
-        MutableStateFlow(listOf(NavBackStackEntry(NavDestination().apply { route = MainNavigation.Home.route })))
+    private var _graph: NavGraph? = null
+    var graph get() = _graph!!
+        set(value) {
+            _graph = value
+        }
+
+    private val _backStack = MutableStateFlow(listOf<NavBackStackEntry>())
     val backStack = _backStack.asStateFlow()
 
     fun navigate(route: String) {
-        _backStack.value += NavBackStackEntry(NavDestination().apply { this.route = route })
+        _backStack.value += NavBackStackEntry(graph.nodes.find { it.route == route }!!)
     }
 }
