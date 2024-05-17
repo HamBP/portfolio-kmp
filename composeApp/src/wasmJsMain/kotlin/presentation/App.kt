@@ -26,7 +26,7 @@ fun App() {
 fun MainNavHost() {
     val navController = rememberNavController()
     val backStack by navController.backStack.collectAsState()
-    val currentDestination by derivedStateOf { backStack.last() }
+    val currentDestination by derivedStateOf { backStack.last().destination.route }
 
     Column {
         Header(
