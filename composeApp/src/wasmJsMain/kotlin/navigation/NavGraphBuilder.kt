@@ -2,6 +2,12 @@ package navigation
 
 import androidx.compose.runtime.Composable
 
+inline fun <reified T: Any> NavGraphBuilder.composable(
+    noinline content: @Composable (NavBackStackEntry) -> Unit,
+) {
+    composable(route = T::class.simpleName.toString(), content = content)
+}
+
 fun NavGraphBuilder.composable(
     route: String,
     content: @Composable (NavBackStackEntry) -> Unit,

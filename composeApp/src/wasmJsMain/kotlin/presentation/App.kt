@@ -31,23 +31,23 @@ fun MainNavHost() {
     Column {
         Header(
             navigateToHome = {
-                navController.navigate(MainNavigation.Home.route)
+                navController.navigate(Home)
             }
         )
 
         NavHost(
             navController = navController,
-            startDestination = MainNavigation.Home.route
+            startDestination = Projects
         ) {
-            composable(route = MainNavigation.Home.route) {
+            composable<Home> {
                 HomeScreen(
                     navigateToProjects = {
-                        navController.navigate(MainNavigation.Projects.route)
+                        navController.navigate(Projects)
                     }
                 )
             }
 
-            composable(route = MainNavigation.Projects.route) { ProjectsScreen() }
+            composable<Projects> { ProjectsScreen() }
         }
     }
 }

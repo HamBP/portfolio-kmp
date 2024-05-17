@@ -5,6 +5,15 @@ import androidx.compose.runtime.*
 @Composable
 fun NavHost(
     navController: NavController,
+    startDestination: Any,
+    builder: NavGraphBuilder.() -> Unit,
+) {
+    NavHost(navController, startDestination::class.simpleName.toString(), builder)
+}
+
+@Composable
+fun NavHost(
+    navController: NavController,
     startDestination: String,
     builder: NavGraphBuilder.() -> Unit,
 ) {
