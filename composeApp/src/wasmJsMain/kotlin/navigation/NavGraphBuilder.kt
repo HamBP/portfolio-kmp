@@ -20,7 +20,7 @@ class NavGraphBuilder {
         destinations.add(destination)
     }
 
-    fun build(): List<ComposeNavigator.Destination> {
-        return destinations.toList()
+    fun build() = NavGraph().apply {
+        addDestinations(destinations)
     }
 }

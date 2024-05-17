@@ -12,6 +12,6 @@ fun NavHost(
     val backStack by navController.backStack.collectAsState()
     val currentDestination by derivedStateOf { backStack.last().destination.route }
 
-    val currentScreen = graph.find { it.route == currentDestination }!!
+    val currentScreen = graph.nodes.find { it.route == currentDestination }!!
     (currentScreen as? ComposeNavigator.Destination)?.content?.invoke(backStack.last())
 }
