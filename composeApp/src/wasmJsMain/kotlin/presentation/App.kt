@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import me.algosketch.navigation.ComposeNavigator
 import navigation.rememberNavController
 import presentation.feature.home.HomeScreen
 import presentation.feature.projects.ProjectsScreen
@@ -28,6 +29,24 @@ fun MainNavHost() {
     val backStack by navController.backStack.collectAsState()
     val currentDestination by derivedStateOf { backStack.last().destination.route }
 
+    val homeDestination = ComposeNavigator.Destination {
+        HomeScreen(
+            navigateToProjects = {
+                navController.navigate(MainNavigation.Projects.route)
+            }
+        )
+    }.apply {
+        route = MainNavigation.Home.route
+    }
+
+    val projectsDestination = ComposeNavigator.Destination {
+        ProjectsScreen()
+    }.apply {
+        route = MainNavigation.Projects.route
+    }
+
+    val graph = remember { listOf(homeDestination, projectsDestination) }
+
     Column {
         Header(
             navigateToHome = {
@@ -35,15 +54,8 @@ fun MainNavHost() {
             }
         )
 
-        when (currentDestination) {
-            MainNavigation.Home.route -> HomeScreen(
-                navigateToProjects = {
-                    navController.navigate(MainNavigation.Projects.route)
-                }
-            )
-
-            MainNavigation.Projects.route -> ProjectsScreen()
-        }
+        val currentScreen = graph.find { it.route == currentDestination }!!
+        currentScreen.content(backStack.last())
     }
 }
 

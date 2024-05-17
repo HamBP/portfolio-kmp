@@ -1,5 +1,5 @@
 package navigation
 
-class NavDestination {
+open class NavDestination {
     var route: String? = null
 }
