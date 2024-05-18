@@ -15,6 +15,7 @@ import navigation.composable
 import navigation.rememberNavController
 import presentation.feature.home.HomeScreen
 import presentation.feature.projects.ProjectsScreen
+import presentation.feature.skills.SkillsScreen
 import presentation.ui.Gray90
 
 @Composable
@@ -32,7 +33,13 @@ fun MainNavHost() {
         Header(
             navigateToHome = {
                 navController.navigate(Home)
-            }
+            },
+            navigateToProjects = {
+                navController.navigate(Projects)
+            },
+            navigateToSkills = {
+                navController.navigate(Skills)
+            },
         )
 
         NavHost(
@@ -48,21 +55,36 @@ fun MainNavHost() {
             }
 
             composable<Projects> { ProjectsScreen() }
+
+            composable<Skills> { SkillsScreen() }
         }
     }
 }
 
 @Composable
 private fun Header(
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    navigateToProjects: () -> Unit,
+    navigateToSkills: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().height(64.dp).background(Gray90).padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         Text(
             modifier = Modifier.clickable(onClick = navigateToHome),
             text = "Home",
+            color = Color.White,
+        )
+        Text(
+            modifier = Modifier.clickable(onClick = navigateToProjects),
+            text = "Projects",
+            color = Color.White,
+        )
+        Text(
+            modifier = Modifier.clickable(onClick = navigateToSkills),
+            text = "Skills",
             color = Color.White,
         )
     }
