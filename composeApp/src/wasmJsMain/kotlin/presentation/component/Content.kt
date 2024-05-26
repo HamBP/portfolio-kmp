@@ -37,7 +37,6 @@ fun Content(
 
     Box(
         modifier = Modifier
-            .padding(top = 20.dp)
             .fillMaxWidth(),
     ) {
         LazyColumn(
@@ -46,7 +45,7 @@ fun Content(
         ) {
             item {
                 Header(
-                    modifier = Modifier.width(contentWidth),
+                    modifier = Modifier.padding(top = 20.dp).width(contentWidth),
                     content = content,
                 )
             }

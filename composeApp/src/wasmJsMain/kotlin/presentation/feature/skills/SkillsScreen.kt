@@ -31,7 +31,7 @@ fun SkillsScreen(
         ) {
             Spacer(modifier = Modifier.height(40.dp))
             Text(
-                modifier = Modifier.padding(bottom = 8.dp),
+                modifier = Modifier.padding(bottom = 16.dp),
                 text = "언어",
                 style = head3,
             )
