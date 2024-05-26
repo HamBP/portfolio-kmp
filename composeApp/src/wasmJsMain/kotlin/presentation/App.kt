@@ -70,7 +70,7 @@ private fun Header(
     Row(
         modifier = Modifier.fillMaxWidth().height(64.dp).background(Gray90).padding(horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(24.dp)
+        horizontalArrangement = Arrangement.spacedBy(40.dp)
     ) {
         Text(
             modifier = Modifier.clickable(onClick = navigateToHome),

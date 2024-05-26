@@ -86,14 +86,10 @@ fun Content(
                 }
             }
 
-            val parsedTree =
-                MarkdownParser(CommonMarkFlavourDescriptor()).buildMarkdownTreeFromString(content.descriptions)
-
             item {
                 RenderMarkdown(
                     modifier = Modifier.padding(top = 24.dp, bottom = 40.dp).width(contentWidth),
                     src = content.descriptions,
-                    ast = parsedTree,
                 )
             }
         }
@@ -167,63 +163,5 @@ private fun Header(
             text = content.summary,
             style = title3,
         )
-    }
-}
-
-@Composable
-private fun RenderMarkdown(
-    modifier: Modifier = Modifier,
-    src: String,
-    ast: ASTNode,
-) {
-    val annotatedString = buildAnnotatedString {
-        parseAst(src, ast)
-    }
-
-    Text(modifier = modifier, text = annotatedString)
-}
-
-private fun AnnotatedString.Builder.parseAst(
-    src: String,
-    ast: ASTNode,
-) {
-    val spanStyle = SpanStyle(
-        fontFamily = body2.fontFamily,
-        fontSize = if (ast.parent?.type?.name?.startsWith("ATX") == true) title3.fontSize else body2.fontSize,
-        fontWeight = if (ast.parent?.type?.name?.startsWith("ATX") == true) title3.fontWeight else body2.fontWeight,
-    )
-
-    when (ast.type.name) {
-        "MARKDOWN_FILE", "UNORDERED_LIST", "PARAGRAPH", "LIST_ITEM" -> {
-            ast.children.forEach {
-                parseAst(src, it)
-            }
-        }
-
-        "TEXT", "ATX_CONTENT" -> {
-            withStyle(style = spanStyle) {
-                append(src.substring(ast.startOffset, ast.endOffset))
-            }
-        }
-
-        "LIST_BULLET" -> {
-            withStyle(style = spanStyle) {
-                append("·")
-            }
-        }
-
-        "WHITE_SPACE" -> {
-            withStyle(style = spanStyle) {
-                append(" ")
-            }
-        }
-
-        "EOL" -> append("\n")
-
-        else -> {
-            ast.children.forEach {
-                parseAst(src, it)
-            }
-        }
     }
 }

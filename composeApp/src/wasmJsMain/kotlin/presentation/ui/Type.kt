@@ -36,6 +36,12 @@ val head2 = TextStyle(
     fontWeight = FontWeight.SemiBold,
 )
 
+val head3 = TextStyle(
+    fontFamily = pretendardFamily,
+    fontSize = 22.sp,
+    fontWeight = FontWeight.SemiBold,
+)
+
 val title3 = TextStyle(
     fontFamily = pretendardFamily,
     fontSize = 18.sp,
