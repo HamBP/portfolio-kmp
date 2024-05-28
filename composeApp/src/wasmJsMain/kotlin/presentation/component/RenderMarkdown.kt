@@ -37,7 +37,7 @@ private fun AnnotatedString.Builder.parseAst(
     src: String,
     ast: ASTNode,
 ) {
-    when (ast.type.name) {
+    when (val type = ast.type.name) {
         "MARKDOWN_FILE", "UNORDERED_LIST", "PARAGRAPH", "LIST_ITEM" -> {
             ast.children.forEach {
                 parseAst(spanStyle, src, it)
@@ -79,9 +79,9 @@ private fun AnnotatedString.Builder.parseAst(
             }
         }
 
-        ":" -> {
+        ":", "(", ")" -> {
             withStyle(style = spanStyle) {
-                append(":")
+                append(type)
             }
         }
 
